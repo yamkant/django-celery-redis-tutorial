@@ -16,5 +16,16 @@ app.config_from_object(
     "django.conf:settings",
     namespace="CELERY",
 )
-
 app.autodiscover_tasks()
+
+
+app.conf.timezone = 'Asia/Seoul'
+app.conf.beat_schedule = {
+    "test-periodic-job": {
+        "task": "api.tasks.test_periodic_task",
+        'schedule': crontab(),
+        # "schedule": crontab(
+        #     minute=0
+        # )
+    }
+}
